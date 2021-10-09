@@ -4,9 +4,10 @@ Projekt badawczy mający na celu sprawdzenie wpływu różnego rodzaju kar i nag
 
 ## Spis treści
 
-- [Zasady gry](#zasady)
-- [Zasady commitowania](#commits)
+- [Zasady gry](#zasadygry)
+- [Zasady commitowania](#zasadycommitowania)
 - [Technologie](#technologie)
+- [Uruchomienie](#uruchomienie)
 
 ## Zasady gry
 
@@ -67,3 +68,17 @@ git log
 - Python - jako środowisko uruchomieniowe i język programowania
 - PyGame - framework do stworzenia aplikacji okienkowej
 - GazeRecorder - aplikacja do badania obszarów skupienia wzroku przez użytkownika w trakcie gry
+
+## Uruchomienie
+
+- W celu pobrania zależności wykorzystanych w projekcie
+
+```
+pip install -r requirements.txt
+```
+
+- By uruchomić aplikacje
+
+```
+python main.py
+```
