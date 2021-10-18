@@ -29,7 +29,7 @@ moves = {
 
 class Game():
     @staticmethod
-    def refresh_screen(screen, game_board, user_board, POINTS):
+    def refresh_screen(screen, game_board, user_board, POINTS, game_variant):
         screen.fill((0, 0, 0))
 
         screen.blit(game_board.surf, game_board.position)
@@ -39,7 +39,10 @@ class Game():
                                     COLUMNS_NUMBER, CIRCLES_COLORS[5])
         game_board.add_board_circles(
             screen, user_board.active_color, user_board.next_color, CIRCLE_RADIUS)
+        if game_variant == 0 or game_variant == 2:
+            game_board.add_image(screen, game_board.active_image, IMG_POSITION)
 
+        # refresh circles
         for circles in user_board.circles:
             for circle in circles:
                 if circle != 0:
@@ -60,13 +63,14 @@ class Game():
         user_board.set_new_color()
 
     @staticmethod
-    def run(screen, user_board, game_board):
+    def run(screen, user_board, game_board, game_variant):
         running = True
         points = 0
 
         # Main loop
         while running:
-            Game.refresh_screen(screen, game_board, user_board, points)
+            Game.refresh_screen(screen, game_board,
+                                user_board, points, game_variant)
             # Look at every event in the queue
             for event in pygame.event.get():
                 # Did the user hit a key?
@@ -77,7 +81,8 @@ class Game():
                         Game.user_move(screen, user_board, event.key)
                         game_board.update_board_circles(screen,
                                                         user_board.active_color, user_board.next_color)
-                        points = user_board.calculate_points()
+                        points = user_board.calculate_points(screen,
+                                                             game_board, points, game_variant)
                         game_board.update_points_label(
                             screen, points, CIRCLES_COLORS[5])
 

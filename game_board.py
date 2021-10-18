@@ -5,7 +5,7 @@ from constants import *
 
 
 class GameBoard(pygame.sprite.Sprite):
-    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT):
+    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT, image):
         super(GameBoard, self).__init__()
         self.surf = pygame.Surface((SCREEN_WIDTH - 50, SCREEN_HEIGHT - 50))
         self.surf.fill((255, 255, 255))
@@ -14,6 +14,7 @@ class GameBoard(pygame.sprite.Sprite):
             (SCREEN_HEIGHT-self.surf.get_height())/2
         )
         self.rect = self.surf.get_rect()
+        self.active_image = image
 
     def add_board_labels(self, screen, total, points, columns_number, color):
         font = pygame.font.SysFont('Comic Sans MS', 15)
@@ -58,3 +59,9 @@ class GameBoard(pygame.sprite.Sprite):
         pygame.draw.circle(screen, self.next_circle.color,
                            self.next_circle.position, self.next_circle.radius)
         pygame.display.update()
+
+    def add_image(self, screen, image, position):
+        self.active_image = image
+        faceImg = pygame.image.load(self.active_image)
+        faceImg = pygame.transform.scale(faceImg, (100, 100))
+        screen.blit(faceImg, position)

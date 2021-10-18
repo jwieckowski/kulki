@@ -9,7 +9,7 @@ class UserBoard(pygame.sprite.Sprite):
     def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT, BOARD_WIDTH, BOARD_HEIGHT, active_color, next_color, COLUMNS=5, ROWS=3):
         super(UserBoard, self).__init__()
         self.surf = pygame.Surface((BOARD_WIDTH, BOARD_HEIGHT))
-        self.surf.fill((169, 169, 169))
+        self.surf.fill((180, 180, 180))
         self.position = (
             (SCREEN_WIDTH-self.surf.get_width())/2,
             (SCREEN_HEIGHT-self.surf.get_height())/2
@@ -37,7 +37,7 @@ class UserBoard(pygame.sprite.Sprite):
         self.active_color = self.next_color
         self.next_color = CIRCLES_COLORS[random.randint(0, 4)]
 
-    def calculate_points(self):
+    def calculate_points(self, screen, game_board, current_points, game_variant):
         rows, columns = self.circles.shape
         total_points = 0
         active_points = 1
@@ -54,6 +54,7 @@ class UserBoard(pygame.sprite.Sprite):
                         active_points = 1
                 else:
                     active_points = 1
+
             active_points = 1
 
         # calculate points in columns
@@ -69,5 +70,39 @@ class UserBoard(pygame.sprite.Sprite):
                 else:
                     active_points = 1
             active_points = 1
+
+        # update extra points and set rewards and penalties
+        if total_points == current_points:
+            if game_variant == 0:
+                game_board.active_image = 'assets/empty.png'
+            elif game_variant == 2:
+                game_board.active_image = 'assets/sad.png'
+            elif game_variant == 3:
+                errorSound = pygame.mixer.Sound('assets/error.wav')
+                errorSound.play()
+            elif game_variant == 1:
+                self.surf.fill((100, 100, 100))
+
+            # smaller circles
+            # for circles in self.circles:
+            #     for circle in circles:
+            #         if circle != 0:
+            #             pygame.draw.circle(screen, circle.color,
+            #                                circle.position, CIRCLE_RADIUS)
+
+        else:
+            if game_variant == 0:
+                game_board.active_image = 'assets/smile.png'
+            if game_variant == 2:
+                game_board.active_image = 'assets/empty.png'
+            elif game_variant == 1:
+                self.surf.fill((180, 180, 180))
+
+            # enlarge circles
+            # for circles in self.circles:
+            #     for circle in circles:
+            #         if circle != 0:
+            #             pygame.draw.circle(screen, circle.color,
+            #                                circle.position, BIGGER_CIRCLE_RADIUS)
 
         return total_points
