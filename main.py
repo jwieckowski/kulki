@@ -11,7 +11,7 @@ from constants import *
 # 1 - rewards - lighter background
 # 2 - penalties - sad
 # 3 - penalties - sound
-game_variant = 3
+game_variant = 0
 
 
 START_IMAGE = 'assets/smile.png' if game_variant == 0 else 'assets/sad.png'
@@ -23,7 +23,7 @@ next_color = CIRCLES_COLORS[random.randint(0, 4)]
 
 # Create the screen object
 # The size is determined by the constant SCREEN_WIDTH and SCREEN_HEIGHT
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
 screen.fill((0, 0, 0))
 
 game_board = GameBoard(SCREEN_WIDTH, SCREEN_HEIGHT, START_IMAGE)

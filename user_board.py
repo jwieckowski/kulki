@@ -6,7 +6,7 @@ from constants import *
 
 
 class UserBoard(pygame.sprite.Sprite):
-    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT, BOARD_WIDTH, BOARD_HEIGHT, active_color, next_color, COLUMNS=5, ROWS=3):
+    def __init__(self, SCREEN_WIDTH, SCREEN_HEIGHT, BOARD_WIDTH, BOARD_HEIGHT, active_color, next_color):
         super(UserBoard, self).__init__()
         self.surf = pygame.Surface((BOARD_WIDTH, BOARD_HEIGHT))
         self.surf.fill((180, 180, 180))
@@ -16,7 +16,8 @@ class UserBoard(pygame.sprite.Sprite):
         )
         self.rect = self.surf.get_rect()
 
-        self.circles = np.zeros((ROWS, COLUMNS), dtype='object')
+        self.circles = np.zeros(
+            (ROWS, COLUMNS), dtype='object')
         self.active_color = active_color
         self.next_color = next_color
 
@@ -36,6 +37,13 @@ class UserBoard(pygame.sprite.Sprite):
     def set_new_color(self):
         self.active_color = self.next_color
         self.next_color = CIRCLES_COLORS[random.randint(0, 4)]
+
+    def is_board_filled(self):
+        return np.any((self.circles == 0))
+
+    def clear_board(self):
+        self.circles = np.zeros(
+            (ROWS, COLUMNS), dtype='object')
 
     def calculate_points(self, screen, game_board, current_points, game_variant):
         rows, columns = self.circles.shape
