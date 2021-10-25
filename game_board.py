@@ -17,12 +17,13 @@ class GameBoard(pygame.sprite.Sprite):
         self.active_image = image
 
     def add_board_labels(self, screen, total, points, columns_number, color):
-        font = pygame.font.SysFont('Comic Sans MS', 15)
+        font = pygame.font.SysFont('Comic Sans MS', 30)
         self.total_text = font.render(total, True, color)
         screen.blit(self.total_text, (920, 70))
 
+        font = pygame.font.SysFont('Comic Sans MS', 30, bold=True)
         self.points_text = font.render(points, True, color)
-        screen.blit(self.points_text, (1060, 70))
+        screen.blit(self.points_text, (1200, 70))
 
         # TEXT - NUMBER FOR EACH COLUMN
         labels = [str(i+1) for i in range(columns_number)]
@@ -33,12 +34,11 @@ class GameBoard(pygame.sprite.Sprite):
             screen.blit(text, (300 + index * 150, 120))
 
     def update_points_label(self, screen, points, color):
-        # screen.blit(self.points_text, (0, 0))
 
-        font = pygame.font.SysFont('Comic Sans MS', 15)
+        font = pygame.font.SysFont('Comic Sans MS', 30, bold=True)
         self.points_text = font.render(
             str(points), True, color)
-        screen.blit(self.points_text, (1060, 70))
+        screen.blit(self.points_text, (1200, 70))
 
     def add_board_circles(self, screen, first_color, next_color, radius):
         # CURRENT CIRCLE COLOR

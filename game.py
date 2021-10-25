@@ -42,6 +42,19 @@ moves = {
     K_0: 1660,
 }
 
+moves_columns = {
+    K_1: 0,
+    K_2: 1,
+    K_3: 2,
+    K_4: 3,
+    K_5: 4,
+    K_6: 5,
+    K_7: 6,
+    K_8: 7,
+    K_9: 8,
+    K_0: 9,
+}
+
 # Generowanie losowego ID
 userID = secrets.token_urlsafe(6)
 
@@ -122,7 +135,7 @@ class Game():
                             screen, current_points + all_points, CIRCLES_COLORS[5])
 
                         save_move_to_file(userID, timestamp,
-                                          current_points + all_points, game_variant, row, event_changed)
+                                          current_points + all_points, game_variant, row, moves_columns[event.key], event_changed)
 
                     # Was it the Escape key? If so, stop the loop.
                     if event.key == K_ESCAPE:
