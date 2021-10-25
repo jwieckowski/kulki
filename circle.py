@@ -1,5 +1,6 @@
 import pygame
 
+
 class Circle(pygame.sprite.Sprite):
     def __init__(self, color, x, y, radius):
         super(Circle, self).__init__()

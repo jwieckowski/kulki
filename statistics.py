@@ -3,7 +3,7 @@ from datetime import datetime
 
 
 def save_move_to_file(userID, timestamp, points, game_variant, row, column, event_changed):
-    with open('plik.csv', 'a', encoding='utf-8') as csvfile:
+    with open('dane.csv', 'a', encoding='utf-8') as csvfile:
         csvwriter = csv.writer(csvfile)
 
         current_timestamp = datetime.now().timestamp() - timestamp
@@ -13,7 +13,7 @@ def save_move_to_file(userID, timestamp, points, game_variant, row, column, even
             event = 1 if event_changed == 1 else 0
 
         if game_variant == 1:
-            gameVersion = "lighter_background"
+            gameVersion = "bigger_radius"
             event = 1 if event_changed == 1 else 0
 
         if game_variant == 2:
@@ -24,7 +24,5 @@ def save_move_to_file(userID, timestamp, points, game_variant, row, column, even
             gameVersion = "sound_fail"
             event = 1 if event_changed == 1 else 0
 
-        # csvwriter.writerow(
-        #     [userID, current_timestamp, gameVersion, event, correct, colNumber])
         csvwriter.writerow(
             [userID, current_timestamp, gameVersion, event, points, row, column])

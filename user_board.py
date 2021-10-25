@@ -1,9 +1,8 @@
 import pygame
 import numpy as np
 import random
-
 from pygame import event
-
+import time
 from constants import *
 
 
@@ -47,10 +46,11 @@ class UserBoard(pygame.sprite.Sprite):
         self.circles = np.zeros(
             (ROWS, COLUMNS), dtype='object')
 
-    def calculate_points(self, screen, game_board, current_points, game_variant):
+    def calculate_points(self, screen, game_board, current_points, game_variant, row_n, column_n):
         rows, columns = self.circles.shape
         total_points = 0
         active_points = 1
+        event_changed = False
 
         # calculate points in rows
         for r in range(rows):
@@ -81,7 +81,6 @@ class UserBoard(pygame.sprite.Sprite):
                     active_points = 1
             active_points = 1
 
-        event_changed = False
         # update extra points and set rewards and penalties
         if total_points == current_points:
             if game_variant == 0:
@@ -94,14 +93,13 @@ class UserBoard(pygame.sprite.Sprite):
                 errorSound.play()
                 event_changed = True
             elif game_variant == 1:
-                self.surf.fill((100, 100, 100))
+                # self.surf.fill((100, 100, 100))
 
-            # smaller circles
-            # for circles in self.circles:
-            #     for circle in circles:
-            #         if circle != 0:
-            #             pygame.draw.circle(screen, circle.color,
-            #                                circle.position, CIRCLE_RADIUS)
+                for index_r, circles in enumerate(self.circles):
+                    for index_c, circle in enumerate(circles):
+                        if circle != 0:
+                            pygame.draw.circle(screen, circle.color,
+                                               circle.position, CIRCLE_RADIUS)
 
         else:
             if game_variant == 0:
@@ -110,14 +108,19 @@ class UserBoard(pygame.sprite.Sprite):
             if game_variant == 2:
                 game_board.active_image = 'assets/empty.png'
             elif game_variant == 1:
-                self.surf.fill((180, 180, 180))
+                # self.surf.fill((180, 180, 180))
                 event_changed = True
 
-            # enlarge circles
-            # for circles in self.circles:
-            #     for circle in circles:
-            #         if circle != 0:
-            #             pygame.draw.circle(screen, circle.color,
-            #                                circle.position, BIGGER_CIRCLE_RADIUS)
+                # enlarge circles
+                for index_r, circles in enumerate(self.circles):
+                    for index_c, circle in enumerate(circles):
+                        if index_r == row_n and index_c == column_n:
+                            (r, g, b) = circle.color
+                            r = r - 50 if r > 50 else r
+                            g = g - 50 if g > 50 else g
+                            b = b - 50 if b > 50 else b
+                            lighter_color = (r, g, b)
+                            pygame.draw.circle(screen, lighter_color,
+                                               circle.position, BIGGER_CIRCLE_RADIUS)
 
         return total_points, event_changed

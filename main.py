@@ -8,10 +8,10 @@ from constants import *
 
 # GAME VARIANTS
 # 0 - rewards - smile
-# 1 - rewards - lighter background
+# 1 - rewards - bigger radius
 # 2 - penalties - sad
 # 3 - penalties - sound
-game_variant = 0
+game_variant = 1
 
 
 START_IMAGE = 'assets/smile.png' if game_variant == 0 else 'assets/sad.png'

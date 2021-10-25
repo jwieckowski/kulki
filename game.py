@@ -101,6 +101,7 @@ class Game():
         running = True
         all_points = 0
         current_points = 0
+        event_changed = False
 
         # count game time
         start_time = pygame.time.get_ticks()
@@ -130,7 +131,7 @@ class Game():
                         game_board.update_board_circles(screen,
                                                         user_board.active_color, user_board.next_color)
                         current_points, event_changed = user_board.calculate_points(screen,
-                                                                                    game_board, current_points, game_variant)
+                                                                                    game_board, current_points, game_variant, row, moves_columns[event.key])
                         game_board.update_points_label(
                             screen, current_points + all_points, CIRCLES_COLORS[5])
 
@@ -147,6 +148,8 @@ class Game():
 
                 # Update the display
                 pygame.display.flip()
+                if event_changed == True:
+                    pygame.time.delay(300)
 
             # count time
             current_time = pygame.time.get_ticks()
