@@ -116,13 +116,13 @@ class Game():
                         row = Game.user_move(screen, user_board, event.key)
                         game_board.update_board_circles(screen,
                                                         user_board.active_color, user_board.next_color)
-                        current_points = user_board.calculate_points(screen,
-                                                                     game_board, current_points, game_variant)
+                        current_points, event_changed = user_board.calculate_points(screen,
+                                                                                    game_board, current_points, game_variant)
                         game_board.update_points_label(
                             screen, current_points + all_points, CIRCLES_COLORS[5])
 
                         save_move_to_file(userID, timestamp,
-                                          current_points + all_points, game_variant, row)
+                                          current_points + all_points, game_variant, row, event_changed)
 
                     # Was it the Escape key? If so, stop the loop.
                     if event.key == K_ESCAPE:

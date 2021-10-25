@@ -2,6 +2,8 @@ import pygame
 import numpy as np
 import random
 
+from pygame import event
+
 from constants import *
 
 
@@ -79,15 +81,18 @@ class UserBoard(pygame.sprite.Sprite):
                     active_points = 1
             active_points = 1
 
+        event_changed = False
         # update extra points and set rewards and penalties
         if total_points == current_points:
             if game_variant == 0:
                 game_board.active_image = 'assets/empty.png'
             elif game_variant == 2:
                 game_board.active_image = 'assets/sad.png'
+                event_changed = True
             elif game_variant == 3:
                 errorSound = pygame.mixer.Sound('assets/error.wav')
                 errorSound.play()
+                event_changed = True
             elif game_variant == 1:
                 self.surf.fill((100, 100, 100))
 
@@ -101,10 +106,12 @@ class UserBoard(pygame.sprite.Sprite):
         else:
             if game_variant == 0:
                 game_board.active_image = 'assets/smile.png'
+                event_changed = True
             if game_variant == 2:
                 game_board.active_image = 'assets/empty.png'
             elif game_variant == 1:
                 self.surf.fill((180, 180, 180))
+                event_changed = True
 
             # enlarge circles
             # for circles in self.circles:
@@ -113,4 +120,4 @@ class UserBoard(pygame.sprite.Sprite):
             #             pygame.draw.circle(screen, circle.color,
             #                                circle.position, BIGGER_CIRCLE_RADIUS)
 
-        return total_points
+        return total_points, event_changed
